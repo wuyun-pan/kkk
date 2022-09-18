@@ -1,20 +1,22 @@
-from wsgiref.simple_server import make_server
-from pyramid.config import Configurator
-from pyramid.response import Response
-import os
+from tkinter import *
 
-def hello_world(request):
-    name = os.environ.get('NAME')
-    if name == None or len(name) == 0:
-        name = "world"
-    message = "Hello, " + name + "!\n"
-    return Response(message)
+win = Tk()
+win.title('log in')
+win.geometry('300x150')
+win.resizable(0, 0)
+Label(text='account:').place(x=50, y=30)
+uname = Entry(win)
+uname.place(x=100, y=30)
+Label(text='password:').place(x=50, y=70)
+pwd = Entry(win)
+pwd.place(x=100, y=70)
+def login():
+    username = uname.get()
+    password = pwd.get()
+    if username == 'abc' and password == '123':
+        print('log in success')
+    else:
+        print('invalid account or wrong password')
+Button(text='log in', command=login).place(x=100, y=110)
 
-if __name__ == '__main__':
-    port = int(os.environ.get("PORT"))
-    with Configurator() as config:
-        config.add_route('hello', '/')
-        config.add_view(hello_world, route_name='hello')
-        app = config.make_wsgi_app()
-    server = make_server('0.0.0.0', port, app)
-    server.serve_forever()
+win.mainloop()
